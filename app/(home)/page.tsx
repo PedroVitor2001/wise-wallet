@@ -8,6 +8,7 @@ import TransactionsPieChart from "./_components/transactions-pie-chart";
 import { getDashBoard } from "../data/get-dashboard";
 import ExpensesPerCategoryy from "./_components/expenses-per-category";
 import LastTransactions from "./_components/last-transactions";
+import { canUserAddTransaction } from "../data/can-user-add-transaction";
 
 interface HomeProps {
   searchParams: {
@@ -20,14 +21,12 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
   if (!userId) {
     redirect("/login");
   }
-
   const monthIsInvalid = !month || !isMatch(month, "MM");
   if (monthIsInvalid) {
     redirect(`?month=${new Date().getMonth() + 1}`);
   }
-
   const dashBoard = await getDashBoard(month);
-
+  const userCanAddTransaction = await canUserAddTransaction();
   return (
     <>
       <NavBar />
@@ -38,7 +37,11 @@ const Home = async ({ searchParams: { month } }: HomeProps) => {
         </div>
         <div className="grid grid-cols-[2fr,1fr] gap-6 overflow-hidden">
           <div className="flex flex-col gap-6 overflow-hidden">
-            <SummaryCards month={month} {...dashBoard} />
+            <SummaryCards
+              month={month}
+              {...dashBoard}
+              userCanAddTransaction={userCanAddTransaction}
+            />
             <div className="grid grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
               <TransactionsPieChart {...dashBoard} />
               <ExpensesPerCategoryy
