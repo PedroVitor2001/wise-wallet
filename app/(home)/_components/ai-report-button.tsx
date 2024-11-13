@@ -69,7 +69,7 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
                 {reportIsLoading && <Loader2Icon className="animate-spin" />}
                 Gerar Relatório
               </Button>
-            </DialogFooter>{" "}
+            </DialogFooter>
           </>
         ) : (
           <>
@@ -87,7 +87,7 @@ const AiReportButton = ({ month, hasPremiumPlan }: AiReportButtonProps) => {
                 <Link href="/subscription" />
                 Assinar plano premium
               </Button>
-            </DialogFooter>{" "}
+            </DialogFooter>
           </>
         )}
       </DialogContent>
